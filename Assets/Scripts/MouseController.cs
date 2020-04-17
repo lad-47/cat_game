@@ -10,6 +10,9 @@ public class MouseController : MonoBehaviour {
 	private int currentDistance;
 	private int targetDistance;
 	private int currentSpeed;
+	public AudioSource audioSource;
+	public AudioClip[] entryClips;
+	public AudioClip[] exitClips;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +45,8 @@ public class MouseController : MonoBehaviour {
 		if (gameController == null) {
 			Debug.Log ("Cannot find 'GameController' script");
 		}
+		AudioClip entryClip = entryClips[Random.Range(0,entryClips.Length)];
+		audioSource.PlayOneShot(entryClip, 1.0f);
         
     }
 
@@ -57,6 +62,8 @@ public class MouseController : MonoBehaviour {
             if (hitInformation.collider != null) {
                 GameObject touchedObject = hitInformation.transform.gameObject;
                 gameController.update_score();
+				AudioClip exitClip = exitClips[Random.Range(0,exitClips.Length)];
+				audioSource.PlayOneShot(exitClip, 1.0f);
                 Destroy(touchedObject);
             }
         }
